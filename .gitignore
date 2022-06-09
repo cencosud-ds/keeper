@@ -1,0 +1,10 @@
+.idea
+
+# test files
+terraform.tfvars
+terraform.tfvars.encrypted
+
+# Artifacts
+cmd/cli-tool/cli-tool
+cmd/rest-server/rest-server
+keeper
