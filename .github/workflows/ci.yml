@@ -21,7 +21,7 @@ jobs:
 
       - name: Test
         run: |
-          wget -o -q https://github.com/mfridman/tparse/releases/download/v0.8.3/tparse_0.10.3_Linux_x86_64.tar.gz -O tparse.tar.gz
+          wget -o -q https://github.com/mfridman/tparse/releases/download/v0.10.3/tparse_linux_x86_64 -O tparse.tar.gz
           tar xvzf tparse.tar.gz
           go test ./... -json -cover | ./tparse
 
