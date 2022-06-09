@@ -22,6 +22,7 @@ jobs:
       - name: Test
         run: |
           wget -o -q https://github.com/mfridman/tparse/releases/download/v0.10.3/tparse_linux_x86_64 -O tparse
+          chmod +x tparse
           go test ./... -json -cover | ./tparse
 
       - name: Build CLI Binary
