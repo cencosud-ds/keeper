@@ -21,12 +21,18 @@ jobs:
 
       - name: Test
         run: |
-          wget -o -q https://github.com/mfridman/tparse/releases/download/v0.10.3/tparse_linux_x86_64 -O tparse.tar.gz
-          tar xvzf tparse.tar.gz
+          wget -o -q https://github.com/mfridman/tparse/releases/download/v0.10.3/tparse_linux_x86_64 -O tparse
           go test ./... -json -cover | ./tparse
 
-      - name: Build Go binary
-        run: go build
+      - name: Build CLI Binary
+        run: |
+          cd cmd/cli-tool
+          go build
+
+      - name: Build REST API Binary
+        run: |
+          cd cmd/rest-server
+          go build
 
       - name: Build Docker Image
         run: docker build .
