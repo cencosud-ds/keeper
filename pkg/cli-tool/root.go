@@ -2,10 +2,9 @@ package cli_tool
 
 import (
 	"github.com/spf13/cobra"
+	"log"
+	"os"
 )
-
-var awsProfile string
-var encryptionKey string
 
 // root represents the base command, it is called when there are no subcommands
 var root = &cobra.Command{
@@ -19,12 +18,25 @@ func Execute() {
 	cobra.CheckErr(root.Execute())
 }
 
+var awsProfile string
+var encryptionKey string
+
 func init() {
 	root.PersistentFlags().StringVarP(&awsProfile, "aws-profile", "p", "", "aws profile to use, if not set, uses default")
 	root.PersistentFlags().StringVarP(&encryptionKey, "encryption-key", "k", "", "arn of the KMS key to be used for encrypting and decrypting values")
 
+	if awsProfile == "" {
+		awsProfile = os.Getenv("AWS_PROFILE")
+	}
+
+	if encryptionKey == "" {
+		encryptionKey = os.Getenv("ENCRYPTION_KEY_ARN")
+	}
+
+	log.Printf("Creating KMS client with profile: %v\n", awsProfile)
+	log.Printf("Using KMS key: %v\n", encryptionKey)
+
 	root.AddCommand(decrypt)
 	root.AddCommand(encrypt)
-	root.AddCommand(versionCmd)
-
+	root.AddCommand(version)
 }

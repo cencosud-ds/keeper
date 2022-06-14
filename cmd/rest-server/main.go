@@ -21,6 +21,20 @@ func main() {
 	encryptionKey := flag.StringP("key", "k", "", "arn of the KMS key to be used for encrypting and decrypting values")
 	flag.Parse()
 
+	if *awsProfile == "" {
+		err := flag.Set("aws-profile", os.Getenv("AWS_PROFILE"))
+		if err != nil {
+			log.Printf("error setting aws-profile: %v", err)
+		}
+	}
+
+	if *encryptionKey == "" {
+		err := flag.Set("key", os.Getenv("ENCRYPTION_KEY_ARN"))
+		if err != nil {
+			log.Printf("error setting encryption key: %v", err)
+		}
+	}
+
 	log.Printf("Creating KMS client with profile: %v\n", *awsProfile)
 	log.Printf("Using KMS key: %v\n", *encryptionKey)
 
