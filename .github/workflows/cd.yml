@@ -21,6 +21,5 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          tags: latest
+          tags: ghcr.io/${{ github.repository_owner }}/keeper:latest
           push: true
-          context: .
