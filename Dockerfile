@@ -30,7 +30,7 @@ COPY --from=builder /etc/group /etc/group
 # Certs for making https requests
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-COPY --from=builder /keeper/keeper .
+COPY --from=builder /keeper/keeper /
 
 # Running as appuser
 USER appuser:appuser
