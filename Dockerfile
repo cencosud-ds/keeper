@@ -3,16 +3,16 @@ FROM golang:1.18-alpine as builder
 WORKDIR /keeper
 
 # Creates non root user
-#ENV USER=appuser
-#ENV UID=10001
-#RUN adduser \
-#    --disabled-password \
-#    --gecos "" \
-#    --home "/nonexistent" \
-#    --shell "/sbin/nologin" \
-#    --no-create-home \
-#    --uid "${UID}" \
-#    "${USER}"
+ENV USER=appuser
+ENV UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
 
 COPY . .
 
@@ -35,6 +35,6 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /keeper/keeper .
 
 # Running as appuser
-#USER appuser:appuser
+USER appuser:appuser
 
 ENTRYPOINT ["/keeper"]
