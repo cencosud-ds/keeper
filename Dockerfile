@@ -16,11 +16,9 @@ RUN adduser \
 
 COPY . .
 
-RUN go mod download
-
-RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -installsuffix cgo -o keeper cmd/rest-server/main.go
-
-RUN apk add --no-cache ca-certificates && \
+RUN go mod download && \
+    CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -installsuffix cgo -o keeper cmd/rest-server/main.go && \
+    apk add --no-cache ca-certificates && \
     update-ca-certificates
 
 FROM busybox:stable
