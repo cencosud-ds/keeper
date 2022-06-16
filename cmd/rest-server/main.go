@@ -15,7 +15,7 @@ import (
 	"syscall"
 	"time"
 )
-a
+
 func main() {
 	awsProfile := flag.StringP("aws-profile", "p", "", "aws profile to use, if not set, uses default")
 	encryptionKey := flag.StringP("key", "k", "", "arn of the KMS key to be used for encrypting and decrypting values")
