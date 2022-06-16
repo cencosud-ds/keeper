@@ -51,11 +51,10 @@ jobs:
         run: docker build .
 
       - name: Run hadolint
-        uses: hadolint/hadolint-action@v2
+        uses: hadolint/hadolint-action@v2.1.0
         with:
           format: sarif
           output-file: hadolint-results.sarif
-          no-fail: true
 
       - name: Upload analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v2
