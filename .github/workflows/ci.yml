@@ -3,37 +3,81 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  ci:
+  go-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.18
-
-      - name: Lint
+      - name: Build CLI Binary
         run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.46.2
-          ./bin/golangci-lint run
-
+          cd cmd/cli-tool
+          go build
+      - name: Build REST API Binary
+        run: |
+          cd cmd/rest-server
+          go build
+  go-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
       - name: Test
         run: |
           wget -o -q https://github.com/mfridman/tparse/releases/download/v0.10.3/tparse_linux_x86_64 -O tparse
           chmod +x tparse
           go test ./... -json -cover | ./tparse
-
-      - name: Build CLI Binary
+  go-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint
         run: |
-          cd cmd/cli-tool
-          go build
-
-      - name: Build REST API Binary
-        run: |
-          cd cmd/rest-server
-          go build
-
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.46.2
+          ./bin/golangci-lint run
+  go-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: go
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Build Docker Image
         run: docker build .
+  docker-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run hadolint
+        uses: hadolint/hadolint-action@v2.1.0
+        with:
+          format: sarif
+          output-file: hadolint-results.sarif
+          no-fail: true
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: hadolint-results.sarif
+          wait-for-processing: true
