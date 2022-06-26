@@ -17,7 +17,7 @@ RUN adduser \
 COPY . .
 
 RUN go mod download && \
-    CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -installsuffix cgo -o keeper cmd/keeper/main.go && \
+    CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" GOAMD64=v2 -o keeper cmd/keeper/main.go && \
     apk add --no-cache ca-certificates && \
     update-ca-certificates
 
