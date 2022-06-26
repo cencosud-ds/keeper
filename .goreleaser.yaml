@@ -11,6 +11,8 @@ builds:
     goarch:
       - amd64
       - arm64
+    goamd64:
+      - v2
     env:
       - CGO_ENABLED=0
     ldflags: -s -w
@@ -34,6 +36,7 @@ dockers:
       - "ghcr.io/bruno-chavez/keeper:v{{ .Major }}.{{ .Minor }}"
       - "ghcr.io/bruno-chavez/keeper:latest"
 changelog:
+  use: github
   sort: asc
   filters:
     exclude:
