@@ -3,7 +3,7 @@ FROM golang:1.18-alpine as builder
 WORKDIR /keeper
 
 # Creates non root user
-ENV USER=appuser
+ENV USER=keeper
 ENV UID=10001
 RUN adduser \
     --disabled-password \
@@ -17,7 +17,7 @@ RUN adduser \
 COPY . .
 
 RUN go mod download && \
-    CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -installsuffix cgo -o keeper cmd/rest-server/main.go && \
+    CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -installsuffix cgo -o keeper cmd/keeper/main.go && \
     apk add --no-cache ca-certificates && \
     update-ca-certificates
 
@@ -32,7 +32,7 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 COPY --from=builder /keeper/keeper /
 
-# Running as appuser
-USER appuser:appuser
+# Running as keeper
+USER keeper:keeper
 
 ENTRYPOINT ["/keeper"]
