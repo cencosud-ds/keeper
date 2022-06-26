@@ -3,7 +3,7 @@ FROM busybox:stable
 WORKDIR /keeper
 
 # Creates non root user
-ENV USER=keeper
+ENV USER=user
 ENV UID=10001
 RUN adduser \
     --disabled-password \
@@ -17,6 +17,6 @@ RUN adduser \
 COPY keeper keeper
 
 # Running as keeper
-USER keeper:keeper
+USER user:user
 
 ENTRYPOINT ["/keeper"]
