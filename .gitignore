@@ -6,3 +6,5 @@ terraform.tfvars.encrypted
 
 # Artifacts
 cmd/keeper/keeper
+
+dist/
