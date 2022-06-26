@@ -28,6 +28,12 @@ jobs:
           default_prerelease_bump: false
       - name: Fetch all tags
         run: git fetch --force --tags
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
