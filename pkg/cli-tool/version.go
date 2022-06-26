@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// versionCmd represents the version command
-var versionCmd = &cobra.Command{
+// version prints out the current app version
+var version = &cobra.Command{
 	Use:   "version",
 	Short: "Shows app version",
 	Run: func(_ *cobra.Command, _ []string) {

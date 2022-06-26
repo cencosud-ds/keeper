@@ -2,8 +2,6 @@ package cli_tool
 
 import (
 	"context"
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/service/kms"
 	"github.com/spf13/cobra"
 	"keeper/pkg/repository"
 	"keeper/pkg/service"
@@ -16,18 +14,12 @@ var encrypt = &cobra.Command{
 	Use:   "encrypt",
 	Short: "Encrypts terraform.tfvars input files and generates an encrypted file",
 	Run: func(_ *cobra.Command, _ []string) {
-
-		cfg, err := config.LoadDefaultConfig(
-			context.TODO(),
-			config.WithSharedConfigProfile(awsProfile),
-		)
+		client, err := createKMSClient()
 		if err != nil {
 			log.Println(err)
 		}
-		kmsClient := kms.NewFromConfig(cfg)
 
-		r := repository.NewRepository(kmsClient, encryptionKey)
-
+		r := repository.NewRepository(client, encryptionKey)
 		s := service.NewService(r, nil)
 
 		log.Println("Reading file: " + plainFile)
