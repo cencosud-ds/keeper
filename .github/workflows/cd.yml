@@ -22,6 +22,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: false
           default_prerelease_bump: false
+          dry_run: true
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
