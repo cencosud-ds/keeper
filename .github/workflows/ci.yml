@@ -69,7 +69,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Run hadolint
-        uses: hadolint/hadolint-action@v2
+        uses: hadolint/hadolint-action@v2.1.0
         with:
           format: sarif
           output-file: hadolint-results.sarif
