@@ -1,6 +1,6 @@
 name: CI
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   go-build:
@@ -12,14 +12,8 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.18
-      - name: Build CLI Binary
-        run: |
-          cd cmd/cli-tool
-          go build
-      - name: Build REST API Binary
-        run: |
-          cd cmd/rest-server
-          go build
+      - name: Build binary
+        run: go build cmd/keeper/main.go
   go-test:
     runs-on: ubuntu-latest
     steps:

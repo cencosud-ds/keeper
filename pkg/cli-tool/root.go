@@ -22,6 +22,9 @@ var awsProfile string
 var encryptionKey string
 
 func init() {
+	// Makes error line shows on "log" lib usage
+	log.SetFlags(log.LstdFlags | log.Llongfile)
+
 	root.PersistentFlags().StringVarP(&awsProfile, "aws-profile", "p", "", "aws profile to use, if not set, uses default")
 	root.PersistentFlags().StringVarP(&encryptionKey, "encryption-key", "k", "", "arn of the KMS key to be used for encrypting and decrypting values")
 
@@ -36,6 +39,7 @@ func init() {
 	log.Printf("Creating KMS client with profile: %v\n", awsProfile)
 	log.Printf("Using KMS key: %v\n", encryptionKey)
 
+	root.AddCommand(restServer)
 	root.AddCommand(decrypt)
 	root.AddCommand(encrypt)
 	root.AddCommand(version)
