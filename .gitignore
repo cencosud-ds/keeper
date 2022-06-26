@@ -8,3 +8,5 @@ terraform.tfvars.encrypted
 cmd/cli-tool/cli-tool
 cmd/rest-server/rest-server
 keeper
+
+dist/
