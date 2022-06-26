@@ -24,6 +24,7 @@ jobs:
           default_prerelease_bump: false
           dry_run: true
           release_branches: main
+          fetch_all_tags: true
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
