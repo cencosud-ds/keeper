@@ -30,6 +30,7 @@ dockers:
   - dockerfile: .goreleaser.dockerfile
     goos: linux
     goarch: amd64
+    goamd64: v2
     image_templates:
       - "ghcr.io/bruno-chavez/keeper:{{ .Tag }}"
       - "ghcr.io/bruno-chavez/keeper:v{{ .Major }}"
