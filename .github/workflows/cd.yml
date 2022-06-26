@@ -18,7 +18,7 @@ jobs:
           default_bump: false
           default_prerelease_bump: false
           dry_run: true
-          release_branches: *
+          release_branches: main
           fetch_all_tags: true
   cd:
     runs-on: ubuntu-latest
