@@ -8,7 +8,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/kms v1.17.3
 	github.com/gorilla/mux v1.8.0
 	github.com/spf13/cobra v1.4.0
-	github.com/spf13/pflag v1.0.5
 )
 
 require (
@@ -22,4 +21,5 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.16.7 // indirect
 	github.com/aws/smithy-go v1.11.3 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
 )
